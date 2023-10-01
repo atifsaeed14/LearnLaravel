@@ -8,7 +8,7 @@
         <title>{{ config('app.name', 'Learn Laravel') }}</title>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </head>
     <body>
