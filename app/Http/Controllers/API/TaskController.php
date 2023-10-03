@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
@@ -31,4 +32,13 @@ class TaskController extends BaseController
         return new TaskResource($task);
     }
     
+    public function update(UpdateTaskRequest $request, Task $task)
+    { 
+        $validated = $request->validated();
+
+        $task->update($validated);
+
+        return new TaskResource($task);
+    }
+
 }
