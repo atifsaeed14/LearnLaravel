@@ -17,9 +17,18 @@ use App\Http\Controllers\API\TaskController;
 |
 */
 
-Route::apiResource('v1/tasks', TaskController::class)->only([
-    'index', 'show', 'store', 'update', 'destroy',
-]);
+Route::post('v1/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->get('v1/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('v1/tasks', TaskController::class)->only([
+        'index', 'show', 'store', 'update', 'destroy',
+    ]);
+});
+
 
 // Route::get('v1/tasks', [TaskController::class, 'index']);
 
@@ -38,9 +47,7 @@ Route::apiResource('v1/tasks', TaskController::class)->only([
 //     Route::post('v1/logout', 'logout');
 // });
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 
 // Route::apiResource('v1/post', PostController::class)->except([
 //     'create', 'show', 'edit'
