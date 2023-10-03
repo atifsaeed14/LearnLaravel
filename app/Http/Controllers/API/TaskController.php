@@ -9,14 +9,28 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends BaseController
 {
     public function index(Request $request)
     {
+        // {{base_url}}/v1/tasks?sort=-title
+        // {{base_url}}/v1/tasks?sort=title
+        // {{base_url}}/v1/tasks?sort=is_done,title
+        // {{base_url}}/v1/tasks?filter[is_done]=0
+        
         // return response()->json(Task::all());
         // return new TaskCollection(Task::all());
-        return new TaskCollection(Task::paginate());
+        // return new TaskCollection(Task::paginate());
+
+        $tasks = QueryBuilder::for(Task::class)
+                ->allowedFilters('is_done')
+                // ->defaultSort('created_at')
+                // ->defaultSort('-created_at')
+                ->allowedSorts(['title', 'is_done', 'created_at'])
+                ->paginate(); 
+        return new TaskCollection($tasks);
     }
 
     public function show(Request $request, Task $task)
