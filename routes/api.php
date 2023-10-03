@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,30 @@ use App\Http\Controllers\API\PostController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('v1/tasks', [TaskController::class, 'index']);
 
-Route::apiResource('post', PostController::class)->except([
-    'create', 'show', 'edit'
-]);
+Route::resource('v1/post', PostController::class);
+// Route::post('register', [AuthController::class, 'register']);
+// Route::post('login', [AuthController::class, 'login']);
+
+// Route::group(['middleware' => ['auth:api']], function () {
+//     Route::post('logout', [AuthController::class, 'logout']);
+// });
+
+// Route::controller(AuthController::class)->group(function () {
+//     Route::post('v1/login', 'login');
+//     Route::post('v1/register', 'register');
+//     Route::post('v1/logout', 'logout');
+// });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::apiResource('v1/post', PostController::class)->except([
+//     'create', 'show', 'edit'
+// ]);
+
+// Route::apiResource('v1/post', PostController::class)->only([
+//     'index', 'show'
+// ]);
