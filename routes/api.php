@@ -17,9 +17,14 @@ use App\Http\Controllers\API\TaskController;
 |
 */
 
-Route::get('v1/tasks', [TaskController::class, 'index']);
+Route::apiResource('v1/tasks', TaskController::class)->only([
+    'index', 'show', 'store',
+]);
 
-Route::resource('v1/post', PostController::class);
+// Route::get('v1/tasks', [TaskController::class, 'index']);
+
+// Route::resource('v1/post', PostController::class);
+
 // Route::post('register', [AuthController::class, 'register']);
 // Route::post('login', [AuthController::class, 'login']);
 
