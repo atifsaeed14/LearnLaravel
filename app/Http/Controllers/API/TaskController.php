@@ -15,7 +15,8 @@ class TaskController extends BaseController
     public function index(Request $request)
     {
         // return response()->json(Task::all());
-        return new TaskCollection(Task::all());
+        // return new TaskCollection(Task::all());
+        return new TaskCollection(Task::paginate());
     }
 
     public function show(Request $request, Task $task)
@@ -44,9 +45,7 @@ class TaskController extends BaseController
     public function destroy(Request $request, Task $task) 
     {
         $task->delete();
-        
+
         return response()->noContent();
     }
-
-
 }
