@@ -18,7 +18,7 @@ use App\Http\Controllers\API\TaskController;
 */
 
 Route::apiResource('v1/tasks', TaskController::class)->only([
-    'index', 'show', 'store',
+    'index', 'show', 'store', 'update', 'destroy',
 ]);
 
 // Route::get('v1/tasks', [TaskController::class, 'index']);

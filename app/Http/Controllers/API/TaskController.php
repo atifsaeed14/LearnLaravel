@@ -41,4 +41,12 @@ class TaskController extends BaseController
         return new TaskResource($task);
     }
 
+    public function destroy(Request $request, Task $task) 
+    {
+        $task->delete();
+        
+        return response()->noContent();
+    }
+
+
 }
