@@ -20,7 +20,7 @@ use App\Http\Controllers\API\TaskController;
 Route::controller(AuthController::class)->group(function () {
     Route::post('v1/login', 'login');
     Route::post('v1/register', 'register');
-    Route::post('v1/logout', 'logout');
+    // Route::post('v1/logout', 'logout');
 });
 
 Route::middleware('auth:sanctum')->get('v1/user', function (Request $request) {
@@ -31,13 +31,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('v1/tasks', TaskController::class)->only([
         'index', 'show', 'store', 'update', 'destroy',
     ]);
-});
 
-Route::fallback(function() {
-    return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+    Route::apiResource('v1/posts', PostController::class)->except([
+        'create', 'edit'
+    ]);
 });
-
-// Route::apiResource('v1/post', PostController::class)->except([
-//     'create', 'show', 'edit'
-// ]);

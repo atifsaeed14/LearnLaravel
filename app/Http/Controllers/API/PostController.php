@@ -2,74 +2,96 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post;
-use App\Http\Requests\PostRequest;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Resources\PostResource;
+use App\Models\Post;
+use Validator;
 
-class PostController extends Controller
+
+class PostController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::all();
-        return PostResource::collection($posts);
-    }
+        $isExist = Post::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        if (is_null($isExist)) {
+            return $this->sendError('Data is not available.');
+        } else {
+            return $this->sendResponse(PostResource::collection($isExist), 'Data is available.');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
-        $posts = Post::create($request->all());
-        
-        return new PostResource($posts);
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $result = Post::create($input);
+
+        return $this->sendResponse(new PostResource($result), 'Data created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        //
-    }
+        $result = Post::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
+        if (is_null($result)) {
+            return $this->sendError('Data is not available.');
+        } else {
+            return $this->sendResponse(new PostResource($result), 'Data is available.');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        $post->update($request->all());
-        
-        return new PostResource($post);
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $post->title = $input['title'];
+        $post->content = $input['content'];
+        $post->save();
+
+        return $this->sendResponse(new PostResource($post), 'Data updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
         $post->delete();
-
-        return response(null, 204);
+        return $this->sendResponse([], 'Post deleted successfully.');
     }
 }
