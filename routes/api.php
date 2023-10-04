@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ Route::middleware('auth:sanctum')->get('v1/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('v1/tasks', TaskController::class)->only([
+        'index', 'show', 'store', 'update', 'destroy',
+    ]);
+
+    Route::apiResource('v1/projects', ProjectController::class)->only([
         'index', 'show', 'store', 'update', 'destroy',
     ]);
 
