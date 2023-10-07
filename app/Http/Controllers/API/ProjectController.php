@@ -15,6 +15,11 @@ use App\Http\Resources\ProjectResource;
 
 class ProjectController extends Controller
 {
+    public function __construct() 
+    {
+        $this->authorizeResource(Project::class, 'project');
+    }
+
     public function index(Request $request)
     {
         // return new ProjectCollection(Auth::user()->projects()->paginate());
