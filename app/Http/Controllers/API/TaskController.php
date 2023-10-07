@@ -16,6 +16,11 @@ use App\Http\Resources\TaskResource;
 
 class TaskController extends BaseController
 {
+    public function __construct() 
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
     public function index(Request $request)
     {
         // {{base_url}}/v1/tasks?sort=-title
