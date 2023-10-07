@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('member', function (Blueprint $table) {
+            // $table->foreignId('creator_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             // $table->id();
