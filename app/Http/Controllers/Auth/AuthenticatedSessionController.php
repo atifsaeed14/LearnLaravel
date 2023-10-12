@@ -31,15 +31,14 @@ class AuthenticatedSessionController extends Controller
 
         $url = '';
         if ($request->user()->role === 'admin') {
-            $url = 'admin/dashboard';
+            $url = '/admin_dashboard';
         } elseif ($request->user()->role === 'agent') {
-            $url = 'agent/dashboard';
+            $url = '/agent_dashboard';
         } elseif ($request->user()->role === 'user') {
-            $url = 'dashboard';
+            $url = '/dashboard';
         }
-
         return redirect()->intended($url);
-        // return redirect()->intended(RouteServiceProvider::HOME);
+        //return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -53,6 +52,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

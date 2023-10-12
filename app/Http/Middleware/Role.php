@@ -17,14 +17,13 @@ class Role
     {
         if ($request->user()->role !== $role){
             if ($request->user()->role === 'admin') {
-                return redirect('admin/dashboard');
+                return redirect('/admin_dashboard');
             } elseif ($request->user()->role === 'agent') {
-                return redirect('agent/dashboard');
+                return redirect('/agent_dashboard');
             } elseif ($request->user()->role === 'user') {
-                return redirect('dashboard');
+                return redirect('/dashboard');
             }
-            return redirect('dashboard');
-        } 
+        }
         return $next($request);
     }
 }
