@@ -12,32 +12,35 @@ class AuthController extends BaseController
 {
     public function __construct()
     {
+
     }
 
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|string|email',
+            'login' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($validated)) {
-
-            // $user = Auth::user();
-            $user = User::where('email', $validated['email'])->first();
-
-            return response()->json([
-                'user' => $user,
-                'authorization' => [
-                    'token' => $user->createToken('api_token')->plainTextToken,
-                    'type' => 'Bearer',
-                ]
-            ]);
+        $field = filter_var($validated['login'], FILTER_VALIDATE_EMAIL) ? 'email' : (is_numeric($validated['login']) ? 'phone' : 'username');
+        if (Auth::attempt([$field => $validated['login'], 'password' => $validated['password']], true))
+        {
+              $user   = User::where('email', $validated['login'])
+                        ->orWhere('username',$validated['login'])
+                        ->orWhere('phone', $validated['login'])
+                        ->first();
+              return response()->json([
+                          'user' => $user,
+                          'authorization' => [
+                                                  'token' => $user->createToken('api_token')->plainTextToken,
+                                                  'type' => 'Bearer',
+                                             ]
+                        ]);
         }
-
         return response()->json([
-            'message' => 'Invalid credentials',
-        ], 401);
+                        'message' => 'Invalid credentials',
+                    ], 401);
+
     }
 
     public function register(Request $request)

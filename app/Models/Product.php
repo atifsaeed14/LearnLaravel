@@ -4,10 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'title',
+        'thumbnail',
+        'sku',
+        'tagline',
+        'description',
+        'price',
+        'discount',
+        'status',
+        'featured',
+        'published',
+        'stock',
+        'store_id',
+        'user_id'
+    ];
+
+   /* protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];*/
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function productImage()
     {

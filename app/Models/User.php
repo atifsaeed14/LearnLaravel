@@ -70,5 +70,11 @@ class User extends Authenticatable
     public function memberships(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, Member::class);
-    } 
+    }
+
+    public function addproducts(): HasMany
+    {
+        return $this->hasMany(Product::class, 'user_id');
+    }
 }
+

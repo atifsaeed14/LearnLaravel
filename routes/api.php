@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\API\ProjectController;
 
 /*
@@ -41,3 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'create', 'edit'
     ]);
 });
+
+//Route::get('products', [ProductController::class, 'index']);
+//Route::apiResource('products',ProductController::class)->only(['index','show','store','update']);
+Route::apiResource('products',ProductController::class);
