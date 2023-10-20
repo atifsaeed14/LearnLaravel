@@ -36,6 +36,13 @@ class Product extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    protected static function booted(): void
+    {
+        static::addGlobalScope('creator', function(Builder $builder){
+            $builder->where('user_id', Auth::id());
+        });
+    }
+
     public function productImage()
     {
         return $this->hasMany(ProductImage::class);

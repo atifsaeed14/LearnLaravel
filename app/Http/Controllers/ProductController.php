@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,8 @@ class ProductController extends Controller
     public function store (StoreProductRequest $request)
     {
         $validated = $request->validated();
-        $product = Product::create($validated);
+        //$product = Product::create($validated);
+        $product = Auth::user()->addproducts()->create($validated);
         return new ProductResource($product);
     }
 
