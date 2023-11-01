@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -23,7 +25,6 @@ class Product extends Model
         'published',
         'stock',
         'store_id',
-        'user_id'
     ];
 
    /* protected $hidden = [
@@ -31,14 +32,19 @@ class Product extends Model
         'updated_at'
     ];*/
 
-    public function creator(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function stores(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
     protected static function booted(): void
     {
-        static::addGlobalScope('creator', function(Builder $builder){
+       static::addGlobalScope('user', function(Builder $builder){
             $builder->where('user_id', Auth::id());
         });
     }

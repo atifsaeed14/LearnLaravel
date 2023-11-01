@@ -47,10 +47,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function store()
+    /*public function store()
     {
         return $this->belongsToMany(Store::class);
-    }
+    }*/
 
     public function order()
     {
@@ -72,9 +72,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class, Member::class);
     }
 
-    public function addproducts(): HasMany
+    public function storeMemberships(): BelongsToMany
+    {
+        return $this->belongsToMany(Store::class, Member::class);
+    }
+
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'user_id');
+    }
+
+     public function stores(): HasMany
+    {
+        return $this->hasMany(Store::class, 'user_id');
     }
 }
 

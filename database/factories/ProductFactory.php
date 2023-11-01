@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +29,7 @@ class ProductFactory extends Factory
             'published'=>'1',
             'featured'=>'1',
             'stock' => rand(5, 10),
-            'store_id' => '1',
+            'store_id' => Store::factory(),
             'user_id' => User::factory(),
         ];
     }

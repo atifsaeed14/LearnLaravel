@@ -32,7 +32,7 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         //$product = Product::create($validated);
-        $product = Auth::user()->addproducts()->create($validated);
+        $product = Auth::user()->products()->create($validated);
         return new ProductResource($product);
     }
 

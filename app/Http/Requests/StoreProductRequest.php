@@ -33,7 +33,11 @@ class StoreProductRequest extends FormRequest
             'published' => 'required|integer|min:1',
             'featured' => 'required|integer|min:1',
             'stock' => 'required|integer|min:1',
-            'store_id' => 'required|integer|min:1',
+            'store_id' => [
+                'nullable',
+                Rule::exists('stores','id')->where(function ($query){
+                    $query->where('user_id', Auth::id());
+                }),
             'user_id' => 'required|integer|min:1'
         ];
     }
