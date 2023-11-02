@@ -36,12 +36,12 @@ class UpdateProductRequest extends FormRequest
             'featured' => 'sometimes|required|integer|min:1',
             'stock' => 'sometimes|required|integer|min:1',
             'store_id' => [
-                'nullable',               
-                Rule::exists('stores','id')->where(function ($query){
+                'nullable',
+                Rule::in(Auth::user()->storeMemberships->pluck('id')),
+                /*Rule::exists('stores','id')->where(function ($query){
                     $query->where('user_id', Auth::id());
-                }),//Custom validation Rule
+                }),*///Custom validation Rule
             ],
-            'user_id' => 'sometimes|required|integer|min:1'
         ];
     }
 }

@@ -44,8 +44,10 @@ class Product extends Model
 
     protected static function booted(): void
     {
-       static::addGlobalScope('user', function(Builder $builder){
-            $builder->where('user_id', Auth::id());
+       static::addGlobalScope('member', function(Builder $builder){
+            $builder->where('user_id', Auth::id())
+            ->orWhereIn('store_id', Auth::user()->storeMemberships->pluck('id'));
+
         });
     }
 

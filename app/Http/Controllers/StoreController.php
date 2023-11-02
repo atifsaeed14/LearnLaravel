@@ -14,8 +14,9 @@ class StoreController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Store::class,'store');
+        $this->authorizeResource(Store::class, 'store');
     }
+
     public function index()
     {
         /*$store = QueryBuilder::for(Store::class)

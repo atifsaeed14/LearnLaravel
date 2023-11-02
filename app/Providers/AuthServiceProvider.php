@@ -23,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
         Project::class => ProjectPolicy::class,
         Task::class => TaskPolicy::class,
         Store::class=> StorePolicy::class,
+        Product::class=> ProductPolicy::class,
+
     ];
 
     /**

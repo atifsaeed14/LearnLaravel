@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -35,10 +37,11 @@ class StoreProductRequest extends FormRequest
             'stock' => 'required|integer|min:1',
             'store_id' => [
                 'nullable',
-                Rule::exists('stores','id')->where(function ($query){
+                Rule::in(Auth::user()->storeMemberships->pluck('id')),
+                /*Rule::exists('stores','id')->where(function ($query){
                     $query->where('user_id', Auth::id());
-                }),
-            'user_id' => 'required|integer|min:1'
+                }),*/
+                ],
         ];
     }
 }
