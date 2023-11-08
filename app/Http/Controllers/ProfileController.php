@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\ProfileCollection;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
+    public function __invoke(Request $request)
+    {
+        dd($request->allFiles());
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,6 +31,34 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function indexApi()
+    {
+        $users = QueryBuilder::for(User::class)
+        ->allowedFilters('id')
+        ->defaultSort('created_at')
+        ->paginate();
+        return new ProfileCollection($users);
+    }
+
+    public function storeApi(StoreProfileRequest $request)
+    {
+        $validated = $request->validated();
+        $users = Auth::user()->create($validated);
+        return new ProfileResource($users);
+    }
+
+    public function updateApi(ProfileUpdateRequest $request, User $profile)
+    {
+        $validated = $request->validated();
+        $profile->update($validated);
+        return new ProfileResource($profile);
+    }
+
+    public function showApi(Request $request, User $profile)
+    {
+        return (new ProfileResource($profile));
+                
+    }
     /**
      * Update the user's profile information.
      */
