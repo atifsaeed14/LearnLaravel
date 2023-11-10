@@ -77,6 +77,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Store::class, Member::class);
     }
 
+    public function orderMemberships(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, Member::class);
+    }
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'user_id');
@@ -86,5 +90,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Store::class, 'user_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    
 }
 

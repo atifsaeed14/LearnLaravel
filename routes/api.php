@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('v1/password', [AuthController::class, 'updatePassword'])->name('password.updatePassword');
     Route::get('v1/profile/{profile}', [ProfileController::class, 'showApi'])->name('profile.showApi');
-    Route::put('v1/profile/{profile}', [ProfileController::class, 'updateApi'])->name('profile.updateApi');
+    Route::post('v1/profile/{profile}', [ProfileController::class, 'updateApi'])->name('profile.updateApi');
     Route::get('v1/profile', [ProfileController::class, 'indexApi'])->name('profile.indexApi');
 
 
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ]);*/
     Route::apiResource('products', ProductController::class);
     Route::apiResource('stores', StoreController::class);    
+    Route::apiResource('orders', OrderController::class);    
     
 });
 

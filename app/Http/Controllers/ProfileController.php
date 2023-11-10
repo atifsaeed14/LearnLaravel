@@ -50,6 +50,8 @@ class ProfileController extends Controller
     public function updateApi(ProfileUpdateRequest $request, User $profile)
     {
         $validated = $request->validated();
+        //$uploadedAvatar = $request->avatar->store('public/uploads');
+        //$validated->avatar=$request->avatar->hasName();
         $profile->update($validated);
         return new ProfileResource($profile);
     }
