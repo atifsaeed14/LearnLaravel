@@ -11,6 +11,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShippingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('stores', StoreController::class);    
     Route::apiResource('orders', OrderController::class);    
-    
+    Route::apiResource('shippings', ShippingController::class);        
 });
 
 

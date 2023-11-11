@@ -13,6 +13,11 @@ use App\Http\Resources\OrderCollection;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Order::class, 'order');
+    }
+
     public function index()
     {
         $orders = QueryBuilder::for(Order::class)->paginate();

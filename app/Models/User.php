@@ -81,6 +81,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Order::class, Member::class);
     }
+
+    public function shippingMemberships(): BelongsToMany
+    {
+        return $this->belongsToMany(Shipping::class, Member::class);
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'user_id');
@@ -96,6 +102,9 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'user_id');
     }
 
-    
+    public function shippings()
+    {
+        return $this->hasMany(Shipping::class, 'user_id');
+    }
 }
 
