@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('slug');
+            $table->foreignId('user_id')->constrained('users');
+
             $table->timestamps();
         });
     }

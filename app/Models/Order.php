@@ -65,13 +65,18 @@ class Order extends Model
         });
     }
 
-    public function orderItem()
+    public function orderitems(): HasMany
     {
-        return $this->hasMany(orderItem::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function shippings(): HasMany
     {
         return $this->hasMany(Shipping::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

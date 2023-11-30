@@ -12,6 +12,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\CatagoryController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +67,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('stores', StoreController::class);    
     Route::apiResource('orders', OrderController::class);    
-    Route::apiResource('shippings', ShippingController::class);        
+    Route::apiResource('shippings', ShippingController::class);
+    Route::apiResource('catagories', CatagoryController::class);        
+    Route::apiResource('coupons', CouponController::class);
+    Route::apiResource('payments', PaymentController::class);        
+    Route::apiResource('orderitems', OrderItemController::class);        
+
 });
 
 

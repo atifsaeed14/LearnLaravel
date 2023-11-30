@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
-
 class Store extends Model
 {
     use HasFactory;
@@ -59,5 +57,9 @@ class Store extends Model
     {
         return $this->hasMany(Product::class);
     }
-    
+
+    public function orderitems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

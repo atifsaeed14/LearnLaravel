@@ -66,6 +66,47 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class, 'creator_id');
     }
+     
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'user_id');
+    }
+
+     public function stores(): HasMany
+    {
+        return $this->hasMany(Store::class, 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function orderitems()
+    {
+        return $this->hasMany(OrderItem::class, 'user_id');
+    }
+
+    public function shippings()
+    {
+        return $this->hasMany(Shipping::class, 'user_id');
+    }
+
+    public function catagories()
+    {
+        return $this->hasMany(Catagory::class, 'user_id');
+    }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class, 'user_id');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'user_id');
+    }
+
 
     public function memberships(): BelongsToMany
     {
@@ -87,24 +128,24 @@ class User extends Authenticatable
         return $this->belongsToMany(Shipping::class, Member::class);
     }
 
-    public function products(): HasMany
+    public function catagoryMemberships(): BelongsToMany
     {
-        return $this->hasMany(Product::class, 'user_id');
+        return $this->belongsToMany(Catagory::class, Member::class);
     }
 
-     public function stores(): HasMany
+    public function couponMemberships(): BelongsToMany
     {
-        return $this->hasMany(Store::class, 'user_id');
+        return $this->belongsToMany(Coupon::class, Member::class);
     }
 
-    public function orders()
+    public function productMemberships(): BelongsToMany
     {
-        return $this->hasMany(Order::class, 'user_id');
+        return $this->belongsToMany(Product::class, Member::class);
     }
 
-    public function shippings()
+    public function orderitemMemberships(): BelongsToMany
     {
-        return $this->hasMany(Shipping::class, 'user_id');
+        return $this->belongsToMany(OrderItem::class, Member::class);
     }
 }
 

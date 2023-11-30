@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,10 +43,16 @@ class Product extends Model
         return $this->belongsTo(Store::class, 'store_id');
     }
 
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, Member::class);
+    }
+    
     protected static function booted(): void
     {
        static::addGlobalScope('member', function(Builder $builder){
-            $builder->where('user_id', Auth::id())
+            //$builder->where('user_id', Auth::id())
+            $builder->whereRelation('members', 'user_id', Auth::id())
             ->orWhereIn('store_id', Auth::user()->storeMemberships->pluck('id'));
 
         });
@@ -64,6 +71,11 @@ class Product extends Model
     public function productCategory()
     {
         return $this->hasMany(ProductCategory::class);
+    }
+
+    public function orderitems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
 }

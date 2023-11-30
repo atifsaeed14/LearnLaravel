@@ -16,6 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('store_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('order_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('shipping_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('catagory_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('coupon_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
+            //$table->foreignId('orderitem_id')->nullable()->constrained()->nullOnDelete();
+
             // $table->id();
             // $table->timestamps();
         });

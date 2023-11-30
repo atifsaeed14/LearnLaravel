@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class StoreProductRequest extends FormRequest
+class StoreOrderItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +25,21 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'thumbnail' => 'required|max:255',
-            'sku' => 'required|max:255',
-            'tagline' => 'required|min:3|max:500',
-            'description' => 'required|min:3|max:1000',
+            'quantity' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'discount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'status' => 'required|in:active,inactive,other',
-            'published' => 'required|integer|min:1',
-            'featured' => 'required|integer|min:1',
-            'stock' => 'required|integer|min:1',
+            'status' => 'required|in:available,pending,active,inactive,other',
             'store_id' => [
                 'nullable',
-                Rule::in(Auth::user()->storeMemberships->pluck('id')),
-                /*Rule::exists('stores','id')->where(function ($query){
-                    $query->where('user_id', Auth::id());
-                }),*/
+                Rule::in(Auth::user()->stores->pluck('id')),
+                ],
+            'product_id' => [
+                'nullable',
+                Rule::in(Auth::user()->products->pluck('id')),
+                ],
+            'order_id' => [
+                'nullable',
+                Rule::in(Auth::user()->orderMemberships->pluck('id')),
                 ],
         ];
     }
